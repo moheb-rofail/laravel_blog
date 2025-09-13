@@ -22,13 +22,26 @@
             @csrf
             <label for="title">
                 <span class="text-sm font-medium text-gray-700"> Title </span>
-                <input type="text" name="title" value="{{old('title')}}"  id="title" class="mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm" />
+                <input type="text" name="title" value="{{old('title')}}" id="title"
+                    class="mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm" />
             </label>
 
             <label for="body">
                 <span class="text-sm font-medium text-gray-700"> Body </span>
-                <textarea id="body" name="body" class="mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm">{{old('body')}}</textarea>
+                <textarea id="body" name="body"
+                    class="mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm">{{old('body')}}</textarea>
             </label>
+
+            <label for="author_id">
+                <span class="text-sm font-medium text-gray-700"> Author </span>
+            </label>
+            <select name="author_id" id="author_id" class="mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm">
+                <option value="0"></option>
+                @foreach ($users as $user)
+                    <option value="{{$user->id}}">{{$user->name}}</option>
+                @endforeach
+            </select>
+
 
             <input type="submit" value="Add Post">
         </form>

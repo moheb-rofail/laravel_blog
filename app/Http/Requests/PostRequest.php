@@ -28,7 +28,8 @@ class PostRequest extends FormRequest
                 "min:10", 
                 Rule::unique('posts', 'title')->ignore($this->post) // ignores comparing with the title of current post (when update)
             ],
-            "body"=> ["min:300","string","required"],
+            "body"=> ["min:100","string","required"],
+            "author_id" => ["integer", "gt:0"]
         ];
     }
 }
