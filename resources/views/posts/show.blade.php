@@ -21,29 +21,29 @@
         <table class="min-w-full divide-y-2 divide-gray-200">
             <thead class="ltr:text-left rtl:text-right">
                 <tr class="*:font-medium *:text-gray-900">
-                    <th class="px-3 py-2 whitespace-nowrap">Id</th>
-                    <th class="px-3 py-2 whitespace-nowrap">Title</th>
-                    <th class="px-3 py-2 whitespace-nowrap">Description</th>
-                    <th class="px-3 py-2 whitespace-nowrap">Actions</th>
+                    <th class="px-3 py-2 whitespace">Id</th>
+                    <th class="px-3 py-2 whitespace">Title</th>
+                    <th class="px-3 py-2 whitespace">Body</th>
+                    <th class="px-3 py-2 whitespace">Actions</th>
                 </tr>
             </thead>
 
             <tbody class="divide-y divide-gray-200">
                 <tr class="*:text-gray-900 *:first:font-medium">
-                    <td class="px-3 py-2 whitespace-nowrap">{{$post['id']}}</td>
-                    <td class="px-3 py-2 whitespace-nowrap">{{$post['title']}}</td>
-                    <td class="px-3 py-2 whitespace-nowrap">{{$post['description']}}</td>
-                    <td class="px-3 py-2 whitespace-nowrap">
+                    <td class="px-3 py-2 whitespace">{{$post['id']}}</td>
+                    <td class="px-3 py-2 whitespace">{{$post['title']}}</td>
+                    <td class="px-3 py-2 whitespace">{{$post['body']}}</td>
+                    <td class="px-3 py-2 whitespace">
                         <a href="/posts/{{$post['id']}}/edit"
                             class="inline-block rounded-sm border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:ring-3 focus:outline-hidden"
                             href="#">
                             Edit
                         </a>
-                        <a href="/posts/{{$post['id']}}/delete"
-                            class="inline-block rounded-sm border border-red-600 bg-red-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:ring-3 focus:outline-hidden"
-                            href="#">
-                            Delete
-                        </a>
+                        <form method="post" action="{{route ('posts.destroy', $post['id'])}}">
+                            @csrf
+                            @method('delete')
+                            <button class="inline-block rounded-sm border border-red-600 bg-red-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:ring-3 focus:outline-hidden" type="submit">Delete</button>
+                        </form>
                     </td>
                 </tr>
             </tbody>
