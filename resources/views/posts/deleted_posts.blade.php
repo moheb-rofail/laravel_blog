@@ -36,6 +36,7 @@
                     <th class="px-3 py-2 whitespace">Id</th>
                     <th class="px-3 py-2 whitespace">Title</th>
                     <th class="px-3 py-2 whitespace">Body</th>
+                    <th class="px-3 py-2 whitespace">Restore</th>
                 </tr>
             </thead>
 
@@ -43,8 +44,9 @@
                 @foreach ($posts as $post)
                     <tr class="*:text-gray-900 *:first:font-medium">
                         <td class="px-3 py-2 whitespace">{{$post['id']}}</td>
-                        <td class="px-3 py-2 whitespace"><a href="{{route('posts.show', $post->id)}}">{{$post['title']}}</a></td>
+                        <td class="px-3 py-2 whitespace">{{$post['title']}}</td>
                         <td class="px-3 py-2 whitespace">{{$post['body']}}</td>
+                        <td><a class="inline-block rounded-sm border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:ring-3 focus:outline-hidden" href="{{ route('posts.restore_post', $post->id) }}">Restore</a></td>
                     </tr>
                 @endforeach
             </tbody>

@@ -13,7 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(10)->fragment('posts');;
+        $posts = Post::latest()->paginate(10)->fragment('posts');;
         return view('posts.index', ['posts' => $posts]);
     }
 
