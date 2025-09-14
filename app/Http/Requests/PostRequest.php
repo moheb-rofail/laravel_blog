@@ -29,7 +29,8 @@ class PostRequest extends FormRequest
                 Rule::unique('posts', 'title')->ignore($this->post) // ignores comparing with the title of current post (when update)
             ],
             "body"=> ["min:100","string","required"],
-            "author_id" => ["integer", "gt:0"]
+            "author_id" => ["integer", "gt:0"],
+            //'image'   => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ];
     }
 }

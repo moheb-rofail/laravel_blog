@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\User;
 use App\Models\Post;
 use App\Http\Requests\PostRequest;
+
 
 class PostController extends Controller
 {
@@ -13,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->paginate(10)->fragment('posts');;
+        $posts = Post::orderBy('id','DESC')->latest()->paginate(10);
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -30,11 +33,15 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(PostRequest $request)
-    {
+    {//dd($request->file('image'));
         $post = new Post();
         $post->title = $request->title;
         $post->body = $request->body;
-        $post->author_id = $request->author_id;
+        $post->user_id = Auth::id();
+
+        if ($request->hasFile('image'))
+            $post->image = $request->file('image')->store('posts', 'public');
+        
         $post->save();
         return redirect()->route ('posts.index')->with('success','Post inserted successfully');
     }
@@ -45,8 +52,7 @@ class PostController extends Controller
     public function show(string $id)
     {
         $post = Post::find($id);
-        $user = User::find($post->author_id);
-        return view('posts.show', ['post'=>$post, 'author'=>$user]);
+        return view('posts.show', ['post'=>$post]);
     }
 
     /**
@@ -67,7 +73,10 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->title = $request->title;
         $post->body = $request->body;
-        $post->author_id = $request->author_id;
+
+        if ($request->hasFile('image'))
+            $post->image = $request->file('image')->store('posts', 'public');
+        
         $post->save();
         return redirect()->route ('posts.index')->with('success','Post updated successfully');
     }
@@ -95,5 +104,10 @@ class PostController extends Controller
     public function deleted_posts(){
         $posts = Post::onlyTrashed()->get();
         return view('posts.deleted_posts', ['posts'=>$posts]);
+    }
+
+    public function delete_permanently($id) {
+        Post::withTrashed()->find($id)->forceDelete();
+        return redirect()->route('posts.index')->with('success','Post was successfully deleted permanently');
     }
 }
