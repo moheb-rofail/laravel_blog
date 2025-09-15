@@ -10,6 +10,7 @@
             <thead class="ltr:text-left rtl:text-right">
                 <tr class="*:font-medium *:text-gray-900">
                     <th class="px-3 py-2 whitespace">Id</th>
+                    <th class="px-3 py-2 whitespace">Author</th>
                     <th class="px-3 py-2 whitespace">Title</th>
                     <th class="px-3 py-2 whitespace">Slug</th>
                     <th class="px-3 py-2 whitespace">Body</th>
