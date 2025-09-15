@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="overflow-x-auto">
 
-        <a href="{{route('posts.show', $post->id)}}">
+        <a href="{{route('posts.show', $post->slug)}}">
             <h1>{{$post['title']}}</h1>
         </a>
         <p>{{$post['body']}}</p>

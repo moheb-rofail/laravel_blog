@@ -30,7 +30,7 @@ class PostRequest extends FormRequest
             ],
             "body"=> ["min:100","string","required"],
             "user_id" => ["integer", "gt:0"],
-            '_method' => ['required'] // in postman, we have to use post, so we send _method as PUT in the body
+            //'_method' => ['required'] // in postman, we have to use post, so we send _method as PUT in the body
             //'image'   => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ];
     }

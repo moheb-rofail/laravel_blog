@@ -11,6 +11,7 @@
                 <tr class="*:font-medium *:text-gray-900">
                     <th class="px-3 py-2 whitespace">Id</th>
                     <th class="px-3 py-2 whitespace">Title</th>
+                    <th class="px-3 py-2 whitespace">Slug</th>
                     <th class="px-3 py-2 whitespace">Body</th>
                 </tr>
             </thead>
@@ -20,7 +21,8 @@
                     <tr class="*:text-gray-900 *:first:font-medium">
                         <td class="px-3 py-2 whitespace">{{$post['id']}}</td>
                         <td class="px-3 py-2 whitespace">{{$post->user->name}}</td>
-                        <td class="px-3 py-2 whitespace"><a href="{{route('posts.show', $post->id)}}">{{$post['title']}}</a></td>
+                        <td class="px-3 py-2 whitespace"><a href="{{route('posts.show', $post->slug)}}">{{$post['title']}}</a></td>
+                        <td class="px-3 py-2 whitespace">{{$post->slug}}</td>
                         <td class="px-3 py-2 whitespace">{{$post['body']}}</td>
                     </tr>
                 @endforeach

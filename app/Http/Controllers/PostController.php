@@ -16,7 +16,16 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id','DESC')->latest()->paginate(10);
+        // with here to apply eager loading
+        // Peter Gamal once told me he was facing some terrible heavy loading because of
+        // the problem of n+1 which was resulted by not applying eager loading
+        // by with if there 100 posts, it will make one query for posts and another for their authors. (which called eager loading)
+        // without eager loading it makes one query for the 100 posts and 100 other QUERY to get their authors.
+        
+        // Apply eager loading to avoid N+1 problem
+        // Without it: 1 query for posts + N queries for users
+        // With it: only 2 queries (posts + users)
+        $posts = Post::with('user')->orderBy('id','DESC')->paginate(10);
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -38,6 +47,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->body = $request->body;
         $post->user_id = Auth::id();
+        $post->slug = $request->slug;
 
         if ($request->hasFile('image'))
             $post->image = $request->file('image')->store('posts', 'public');
@@ -49,9 +59,9 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        $post = Post::find($id);
+        $post = Post::where('slug', $slug)->first();
         return view('posts.show', ['post'=>$post]);
     }
 
@@ -73,7 +83,7 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->title = $request->title;
         $post->body = $request->body;
-
+        
         if ($request->hasFile('image'))
             $post->image = $request->file('image')->store('posts', 'public');
         
